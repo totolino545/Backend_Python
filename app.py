@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import os
 from traductor import Traducir
 from metadata import Metadatos
 app = Flask(__name__)
@@ -6,9 +7,8 @@ traductor = Traducir()  # Instancia correcta del traductor
 metadata = Metadatos()  # Instancia correcta de los metadatos
 
 @app.route('/')
-@app.route('/hello')
-def hello():
-    return "Hello Python!"
+def home():
+    return "¡Hola desde Railway!"
 
 @app.route('/traducir', methods=['GET'])
 def obtener_traduccion():
