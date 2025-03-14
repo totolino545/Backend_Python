@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 import os
+from flask_cors import CORS
 from traductor import Traducir
 from metadata import Metadatos
+
 app = Flask(__name__)
+CORS(app)  # Esto habilita CORS para toda la app
 traductor = Traducir()  # Instancia correcta del traductor
 metadata = Metadatos()  # Instancia correcta de los metadatos
 
