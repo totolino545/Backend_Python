@@ -4,7 +4,7 @@ from flask_cors import CORS
 from traductor import Traducir
 from metadata import Metadatos
 from buscador_imagenes import Buscador_Imagenes
-from buscador_textos import buscar_textos
+from buscador_textos import Buscador_Textos
 from duckduckgo_search import DDGS
 
 
@@ -13,7 +13,7 @@ CORS(app)  # Esto habilita CORS para toda la app
 traductor = Traducir()  # Instancia correcta del traductor
 metadata = Metadatos()  # Instancia correcta de los metadatos
 buscador = Buscador_Imagenes()  # Instancia correcta del buscador de imágenes
-buscador_textos = buscar_textos()  # Instancia correcta del buscador de textos
+buscador_textos = Buscador_Textos()  # Instancia correcta del buscador de textos
 
 @app.route('/')
 def home():
@@ -75,23 +75,18 @@ def cargar_imagenes():
         return jsonify({'error': 'Error interno del servidor'}), 500
 
 @app.route('/texto', methods=['GET'])
-def obtener_traduccion():
+def buscar_texto():
     texto = request.args.get('texto')
-    
     if not texto:
         return jsonify({'error': 'Parámetro "texto" requerido'}), 400
-
-    resultados = buscar_textos(texto, max_resultados=5)
-    
-    if resultados:
-        print(f"Resultados de búsqueda para '{query}':\n")
-        for i, res in enumerate(resultados, 1):
-            print(f"Resultado {i}:")
-            print(f"Título: {res['titulo']}")
-            print(f"URL: {res['url']}")
-            print(f"Snippet: {res['snippet'][:15000]}...\n")  # Muestra primeros 150 caracteres
-    else:
-        print("No se encontraron resultados.")
+    try:
+        summary = buscador_textos.buscar_textos(texto, max_resultados=10)
+        if not summary:
+            return jsonify({'error': 'No se encontraron resultados en la busqueda'}), 404
+        return jsonify({'summary': summary})
+    except Exception as e:
+        print(f"Error en el servidor: {e}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
