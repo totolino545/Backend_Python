@@ -13,7 +13,7 @@ class Buscador_Textos:
             respuesta.raise_for_status()
             
             sopa = BeautifulSoup(respuesta.text, "html.parser")
-            parrafos = sopa.find_all("p")
+            parrafos = sopa.find_all("data-Lyrics__Container")
             texto = " ".join([p.get_text() for p in parrafos])
 
             return texto[:2000]  # Límite para evitar respuestas demasiado largas
