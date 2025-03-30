@@ -4,27 +4,29 @@ from bs4 import BeautifulSoup
 
 class Buscador_Textos:
     
-    @staticmethod
+   @staticmethod
     def extraer_texto(url):
-        """Obtiene el texto principal de una página web."""
+        """Extrae texto de una página web, incluyendo letras de canciones si están en un contenedor específico."""
         try:
             headers = {"User-Agent": "Mozilla/5.0"}
             respuesta = requests.get(url, headers=headers, timeout=5)
             respuesta.raise_for_status()
-            
-            sopa = BeautifulSoup(respuesta.text, "html.parser")
-            # Buscar el div que contiene la letra
-        contenedor_letra = sopa.find("div", {"data-lyrics-container": "true"})
 
-        if contenedor_letra:
-            # Reemplazar los <br> por saltos de línea y extraer el texto limpio
-            letra = contenedor_letra.get_text(separator="\n", strip=True)
-            return letra
-        else:
-            return "Letra no encontrada en la página."
-    except Exception as e:
-        print(f"Error al extraer la letra: {e}")
-        return "Error al obtener la letra."
+            sopa = BeautifulSoup(respuesta.text, "html.parser")
+
+            # Buscar contenedor con letras de canciones
+            contenedor_letra = sopa.find("div", {"data-lyrics-container": "true"})
+            if contenedor_letra:
+                return contenedor_letra.get_text(separator="\n", strip=True)
+            
+            # Si no hay letras, buscar párrafos normales como texto alternativo
+            parrafos = sopa.find_all("p")
+            texto = " ".join([p.get_text() for p in parrafos])
+
+            return texto[:2000] if texto else "No se encontró contenido útil."
+        except Exception as e:
+            print(f"Error extrayendo texto de {url}: {e}")
+            return "Error al obtener el contenido.""
 
     @staticmethod
     def buscar_textos(query, max_resultados):
