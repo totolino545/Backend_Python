@@ -13,13 +13,18 @@ class Buscador_Textos:
             respuesta.raise_for_status()
             
             sopa = BeautifulSoup(respuesta.text, "html.parser")
-            parrafos = sopa.find_all("p")
-            texto = " ".join([p.get_text() for p in parrafos])
+            # Buscar el div que contiene la letra
+        contenedor_letra = sopa.find("div", {"data-lyrics-container": "true"})
 
-            return texto[:2000]  # Límite para evitar respuestas demasiado largas
-        except Exception as e:
-            print(f"Error extrayendo texto de {url}: {e}")
-            return ""
+        if contenedor_letra:
+            # Reemplazar los <br> por saltos de línea y extraer el texto limpio
+            letra = contenedor_letra.get_text(separator="\n", strip=True)
+            return letra
+        else:
+            return "Letra no encontrada en la página."
+    except Exception as e:
+        print(f"Error al extraer la letra: {e}")
+        return "Error al obtener la letra."
 
     @staticmethod
     def buscar_textos(query, max_resultados):
