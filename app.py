@@ -5,6 +5,7 @@ from traductor import Traducir
 from metadata import Metadatos
 from buscador_imagenes import Buscador_Imagenes
 from buscador_textos import Buscador_Textos
+from buscador_letros import Buscador_Letras
 from duckduckgo_search import DDGS
 
 
@@ -14,6 +15,7 @@ traductor = Traducir()  # Instancia correcta del traductor
 metadata = Metadatos()  # Instancia correcta de los metadatos
 buscador = Buscador_Imagenes()  # Instancia correcta del buscador de imágenes
 buscador_textos = Buscador_Textos()  # Instancia correcta del buscador de textos
+buscador_letras = Buscador_Letras()  # Instancia correcta del buscador de letras
 
 @app.route('/')
 def home():
@@ -80,7 +82,21 @@ def buscar_texto():
     if not texto:
         return jsonify({'error': 'Parámetro "texto" requerido'}), 400
     try:
-        summary = buscador_textos.buscar_textos(texto, max_resultados=10)
+        summary = buscador_textos.buscar_textos(texto, max_resultados=1)
+        if not summary:
+            return jsonify({'error': 'No se encontraron resultados en la busqueda'}), 404
+        return jsonify({'summary': summary})
+    except Exception as e:
+        print(f"Error en el servidor: {e}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
+
+
+def buscar_letras():
+    texto = request.args.get('texto')
+    if not texto:
+        return jsonify({'error': 'Parámetro "texto" requerido'}), 400
+    try:
+        summary = buscador_letras.buscar_letras(texto, max_resultados=1)
         if not summary:
             return jsonify({'error': 'No se encontraron resultados en la busqueda'}), 404
         return jsonify({'summary': summary})
