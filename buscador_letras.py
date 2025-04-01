@@ -55,9 +55,4 @@ class Buscador_Letras:
             print(f"Error en la búsqueda: {e}")
             return []
 
-# Prueba de la búsqueda
-if __name__ == "__main__":
-    consulta = "letra de I'll play the blues for you"
-    resultados = Buscador_Textos.buscar_textos(consulta, max_resultados=5)
-    for r in resultados:
-        print(f"Título: {r['titulo']}\nURL: {r['url']}\nTexto Completo:\n{r['texto_completo']}\n{'-'*50}")
+
