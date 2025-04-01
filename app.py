@@ -5,7 +5,7 @@ from traductor import Traducir
 from metadata import Metadatos
 from buscador_imagenes import Buscador_Imagenes
 from buscador_textos import Buscador_Textos
-from buscador_letros import Buscador_Letras
+from buscador_letras import Buscador_Letras
 from duckduckgo_search import DDGS
 
 
