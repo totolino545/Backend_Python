@@ -2,7 +2,7 @@ from duckduckgo_search import DDGS
 import requests
 from bs4 import BeautifulSoup
 
-class Buscador_Textos:
+class Buscador_Letras:
     
     @staticmethod
     def extraer_letra(url):
