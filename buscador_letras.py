@@ -1,6 +1,6 @@
 from duckduckgo_search import DDGS
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 
 class Buscador_Letras:
     
@@ -14,16 +14,15 @@ class Buscador_Letras:
 
             sopa = BeautifulSoup(respuesta.text, "html.parser")
 
-            # Buscar contenedor con letras de canciones
-            contenedor_letra = sopa.find("div", {"data-lyrics-container": "true"})
-            if contenedor_letra:
-                return contenedor_letra.get_text(separator="\n", strip=True)
-            
-            # Si no hay letras, buscar párrafos normales como texto alternativo
-            parrafos = sopa.find_all("p")
-            texto = " ".join([p.get_text() for p in parrafos])
+            # Buscar el <div> que contenga el comentario específico
+            for div in sopa.find_all("div"):
+                comentarios = div.find_all(string=lambda text: isinstance(text, Comment))
+                for comentario in comentarios:
+                    if "Usage of azlyrics.com content" in comentario:
+                        texto = div.get_text(separator="\n", strip=True)
+                        return texto
 
-            return texto[:2000] if texto else "No se encontró contenido útil."
+            return "No se encontró la letra en AZLyrics."
         except Exception as e:
             print(f"Error extrayendo texto de {url}: {e}")
             return "Error al obtener el contenido."
@@ -41,7 +40,7 @@ class Buscador_Letras:
                     max_results=max_resultados
                 ):
                     url = resultado["href"]
-                    texto_ampliado = Buscador_Textos.extraer_texto(url)
+                    texto_ampliado = Buscador_Letras.extraer_letra(url)
 
                     resultados.append({
                         "titulo": resultado["title"],
