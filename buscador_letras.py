@@ -13,7 +13,7 @@ class Buscador_Letras:
             respuesta.raise_for_status()
 
             sopa = BeautifulSoup(respuesta.text, "html.parser")
-
+            print(sopa)
             # Buscar el <div> que contenga el comentario específico
             for div in sopa.find_all("div"):
                 comentarios = div.find_all(string=lambda text: isinstance(text, Comment))
