@@ -8,8 +8,20 @@ class Buscador_Letras:
     def extraer_letra(url):
         """Extrae texto de una página web, incluyendo letras de canciones si están en un contenedor específico."""
         try:
-            headers = {"User-Agent": "Mozilla/5.0"}
-            respuesta = requests.get(url, headers=headers, timeout=5)
+            headers = {
+                        "User-Agent": (
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/122.0.0.0 Safari/537.36"
+                        ),
+                        "Referer": "https://www.google.com/",
+                        "Accept-Language": "en-US,en;q=0.9",
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                        "Connection": "keep-alive",
+                        "Upgrade-Insecure-Requests": "1"
+                    }
+
+            respuesta = requests.get(url, headers=headers, timeout=10)
             respuesta.raise_for_status()
 
             sopa = BeautifulSoup(respuesta.text, "html.parser")
