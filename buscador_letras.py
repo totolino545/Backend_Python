@@ -40,13 +40,11 @@ class Buscador_Letras:
                     max_results=max_resultados
                 ):
                     url = resultado["href"]
-                    texto_ampliado = Buscador_Letras.extraer_letra(url)
-
                     resultados.append({
                         "titulo": resultado["title"],
                         "url": url,
                         "snippet": resultado["body"],
-                        "texto_completo": texto_ampliado
+                        "texto_completo": Buscador_Letras.extraer_letra(url)
                     })
 
                 return resultados
