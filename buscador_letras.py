@@ -25,7 +25,7 @@ class Buscador_Letras:
             return "No se encontró la letra en AZLyrics."
         except Exception as e:
             print(f"Error extrayendo texto de {url}: {e}")
-            return "Error al obtener el contenido
+            return "Error al obtener el contenido"
 
     @staticmethod
     def buscar_letras(query, max_resultados):
