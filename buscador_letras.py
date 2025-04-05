@@ -31,16 +31,14 @@ class Buscador_Letras:
             return "Error al obtener la letra."
 
     @staticmethod
-    def buscar_letra(artista, cancion, max_resultados=3):
+    def buscar_letra(query , max_resultados=3):
         """Busca una canción en LyricsFreak usando DuckDuckGo y devuelve la letra."""
-        query = f"{artista} {cancion} site:lyricsfreak.com"
-
         try:
             with DDGS() as ddgs:
                 for resultado in ddgs.text(keywords=query, max_results=max_resultados):
                     url = resultado["href"]
                     if "lyricsfreak.com" in url:
-                        letra = LetrasLyricsFreak.extraer_letra(url)
+                        letra = Buscador_Letras.extraer_letra(url)
                         return {
                             "titulo": resultado["title"],
                             "url": url,
