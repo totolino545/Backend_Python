@@ -90,13 +90,13 @@ def buscar_texto():
         print(f"Error en el servidor: {e}")
         return jsonify({'error': 'Error interno del servidor'}), 500
 
-
+@app.route('/lyrics', methods=['GET'])
 def buscar_letras():
-    texto = request.args.get('texto')
-    if not texto:
-        return jsonify({'error': 'Parámetro "texto" requerido'}), 400
+    query = request.args.get('query')
+    if not query:
+        return jsonify({'error': 'Parámetro "query" requerido'}), 400
     try:
-        summary = buscador_letras.buscar_letras(texto, max_resultados=1)
+        summary = buscador_letras.buscar_letras(query, max_resultados=1)
         if not summary:
             return jsonify({'error': 'No se encontraron resultados en la busqueda'}), 404
         return jsonify({'summary': summary})
