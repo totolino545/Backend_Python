@@ -64,7 +64,7 @@ class Buscador_Letras:
             with DDGS() as ddgs:
                 for resultado in ddgs.text(keywords=query, max_results=max_resultados):
                     url = resultado["href"]
-                    if "lyricsfreak.com" in url: letra = Buscador_Letras.letra_lyricfreack(url)
+                    if "lyricsfreak.com" in url: letra = Buscador_Letras.letra_lyricfreak(url)
                     if "genius.com" in url: letra = Buscador_Letras.letra_lyricgenius(url)                        
                         return {
                             "titulo": resultado["title"],
