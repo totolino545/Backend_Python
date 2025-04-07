@@ -66,11 +66,12 @@ class Buscador_Letras:
                     url = resultado["href"]
                     if "lyricsfreak.com" in url: letra = Buscador_Letras.letra_lyricfreak(url)
                     if "genius.com" in url: letra = Buscador_Letras.letra_lyricgenius(url)                        
-                        return {
-                            "titulo": resultado["title"],
-                            "url": url,
-                            "letra": letra
-                        }
+                    
+                    return {
+                        "titulo": resultado["title"],
+                        "url": url,
+                        "letra": letra
+                    }
             return {"error": "No se encontró letra."}
         except Exception as e:
             return {"error": f"Error durante la búsqueda: {e}"}
