@@ -70,12 +70,11 @@ class Buscador_Letras:
 
             except Exception as e:
                 print(f"Error buscando letra: {e}")
-
-        return {
-            "titulo": f"{artista} - {cancion}",
-            "url": None,
-            "letra": "Letra no encontrada."
-        }
+                return {
+                    "titulo": f"{artista} - {cancion}",
+                    "url": None,
+                    "letra": "Letra no encontrada."
+                }
 
 
 
