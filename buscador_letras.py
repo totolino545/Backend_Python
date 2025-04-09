@@ -48,25 +48,25 @@ class Buscador_Letras:
     @staticmethod
     def buscar_letra(query, max_resultados=5):
 
-            try:
-                with DDGS() as ddgs:
-                    for resultado in ddgs.text(keywords=query, max_results=10):
-                        url = resultado["href"]
-                        print(f"Probando URL: {url}")
+        try:
+            with DDGS() as ddgs:
+                for resultado in ddgs.text(keywords=query, max_results=10):
+                    url = resultado["href"]
+                    print(f"Probando URL: {url}")
 
-                        if "genius.com" in url:
-                            letra = Buscador_Letras.letra_lyricgenius(url)
-                        elif "lyricsfreak.com" in url:
-                            letra = Buscador_Letras.letra_lyricfreak(url)
-                        else:
-                            continue
+                    if "genius.com" in url:
+                        letra = Buscador_Letras.letra_lyricgenius(url)
+                    elif "lyricsfreak.com" in url:
+                        letra = Buscador_Letras.letra_lyricfreak(url)
+                    else:
+                        continue
 
-                        if letra:
-                            return {
-                                "titulo": resultado["title"],
-                                "url": url,
-                                "letra": letra
-                            }
+                    if letra:
+                        return {
+                            "titulo": resultado["title"],
+                            "url": url,
+                            "letra": letra
+                        }
 
             except Exception as e:
                 print(f"Error buscando en {sitio}: {e}")
