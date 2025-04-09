@@ -69,7 +69,7 @@ class Buscador_Letras:
                         }
 
             except Exception as e:
-                print(f"Error buscando en {sitio}: {e}")
+                print(f"Error buscando letra: {e}")
 
         return {
             "titulo": f"{artista} - {cancion}",
