@@ -96,7 +96,7 @@ def buscar_letras():
     if not query:
         return jsonify({'error': 'Parámetro "query" requerido'}), 400
     try:
-        summary = buscador_letras.buscar_letra(query[0], query[1], max_resultados=1)
+        summary = buscador_letras.buscar_letra(query, max_resultados=1)
         if not summary:
             return jsonify({'error': 'No se encontraron resultados en la busqueda'}), 404
         return jsonify({'summary': summary})
