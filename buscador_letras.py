@@ -46,24 +46,11 @@ class Buscador_Letras:
             return None
 
     @staticmethod
-    def construir_query(artista, cancion, sitio=None):
-        artista = re.sub(r"[^\w\s]", "", artista)
-        cancion = re.sub(r"[^\w\s]", "", cancion)
-        query = f"{artista} {cancion}"
-        if sitio:
-            query += f" site:{sitio}"
-        return query.strip()
-
-    @staticmethod
-    def buscar_letra(artista, cancion, max_resultados=5):
-        sitios = ["genius.com", "lyricsfreak.com"]
-
-        for sitio in sitios:
-            query = Buscador_Letras.construir_query(artista, cancion, sitio=sitio)
+    def buscar_letra(query, max_resultados=5):
 
             try:
                 with DDGS() as ddgs:
-                    for resultado in ddgs.text(keywords=query, max_results=max_resultados):
+                    for resultado in ddgs.text(keywords=query, max_results=10):
                         url = resultado["href"]
                         print(f"Probando URL: {url}")
 
