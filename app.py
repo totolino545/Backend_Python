@@ -7,6 +7,8 @@ from buscador_imagenes import Buscador_Imagenes
 from buscador_textos import Buscador_Textos
 from buscador_letras import Buscador_Letras
 from duckduckgo_search import DDGS
+from consulta_api import obtener_radios, obtener_radio_por_id
+
 
 
 app = Flask(__name__)
@@ -103,6 +105,18 @@ def buscar_letras():
     except Exception as e:
         print(f"Error en el servidor: {e}")
         return jsonify({'error': 'Error interno del servidor'}), 500
+
+@app.route('/radios', methods=['GET'])
+def radios():
+    genero = request.args.get('genero', 'blues')
+    resultado, status = obtener_radios(genero)
+    return jsonify(resultado), status
+
+@app.route('/radio/<radio_id>', methods=['GET'])
+def radio_por_id(radio_id):
+    resultado, status = obtener_radio_por_id(radio_id)
+    return jsonify(resultado), status
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
