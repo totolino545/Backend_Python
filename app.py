@@ -7,7 +7,7 @@ from buscador_imagenes import Buscador_Imagenes
 from buscador_textos import Buscador_Textos
 from buscador_letras import Buscador_Letras
 from duckduckgo_search import DDGS
-from consulta_api import obtener_radios, obtener_radio_por_id
+from consulta_api import obtener_radios, obtener_radio_por_id, obtener_metadata_por_id
 
 
 
@@ -115,6 +115,11 @@ def radios():
 @app.route('/radio/<radio_id>', methods=['GET'])
 def radio_por_id(radio_id):
     resultado, status = obtener_radio_por_id(radio_id)
+    return jsonify(resultado), status
+
+@app.route('/metadata/<id>', methods=['GET'])
+def metadata_por_id(id):
+    resultado, status = obtener_metadata_por_id(id)
     return jsonify(resultado), status
 
 
