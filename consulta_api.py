@@ -1,7 +1,7 @@
 import requests
 
 def obtener_radios(genero='blues'):
-    url = f'https://zeno.fm/api/stations/?query={genero}&limit=&genre=Music'
+    url = f'https://zeno.fm/api/stations/?query={genero}&limit=200&genre=Music'
     try:
         response = requests.get(url)
         response.raise_for_status()
