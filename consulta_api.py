@@ -21,7 +21,7 @@ def obtener_radio_por_id(radio_id):
 def obtener_metadata_por_id(id):
     url = f'https://api.zeno.fm/mounts/metadata/subscribe/{id}'
     try:
-        response = requests.get(id)
+        response = requests.get(url)
         response.raise_for_status()
         return response.json(), 200
     except requests.RequestException as e:
