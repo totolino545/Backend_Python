@@ -1,4 +1,4 @@
-import requests
+import requests, json
 
 def obtener_radios(genero='blues'):
     url = f'https://zeno.fm/api/stations/?query={genero}&limit=200&genre=Music'
