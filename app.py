@@ -117,7 +117,7 @@ def radio_por_id(radio_id):
     resultado, status = obtener_radio_por_id(radio_id)
     return jsonify(resultado), status
 
-@app.route('/metadata/<id>', methods=['GET'])
+@app.route('/metadato/<id>', methods=['GET'])
 def metadata_por_id(id):
     resultado, status = obtener_metadata_por_id(id)
     return jsonify(resultado), status
